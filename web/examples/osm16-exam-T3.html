@@ -69,20 +69,28 @@ ol li {
               Initial offset: <input type="text"
                 onChange={this.changeOffset}
                 defaultValue={this.state.offset} />
-            <ol>
+            <ol type="a">
               <li><Inode {...this.state} size={allocA}
                     offset={offsetA} /></li>
               <li><Inode {...this.state} size={allocB}
                     offset={offsetB} /></li>
               <li>
-                <div className="calc">
-                  N = { exprC } = { allocC } (bytes)
-                </div>
-                <div className="text">
-                  That requires { emulateAlloc(allocC, this.state) } blocks.
-                </div>
-                <Inode {...this.state} size={allocC}
-                    offset={offsetC} />
+                <ol type="i">
+                  <li>
+                    <div className="calc">
+                      N = { exprC } = { allocC } (bytes)
+                    </div>
+                  </li>
+                  <li>
+                    <div className="calc">
+                      { emulateAlloc(allocC, this.state) } (blocks)
+                    </div>  
+                  </li>
+                  <li>
+                    <Inode {...this.state} size={allocC}
+                      offset={offsetC} />
+                  </li>
+                </ol>
               </li>
               <li>
                 <div className="calc">
