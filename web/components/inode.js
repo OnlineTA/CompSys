@@ -1,4 +1,4 @@
-function emulateAlloc(size, props) {
+window.emulateAlloc = function emulateAlloc(size, props) {
   var n_blocks = Math.ceil(size / props.block_size);
 
   var n_lvl1_blocks = Math.min(props.n_direct, n_blocks);
@@ -41,7 +41,7 @@ function emulateAlloc(size, props) {
          n_innr_blocks;
 }
 
-var Inode = React.createClass({
+window.Inode = React.createClass({
   render: function() {
 
     var offset = this.props.offset + (this.props.alloc_inode_block ? 1 : 0);
@@ -148,7 +148,8 @@ var Inode = React.createClass({
       );
     }
 
-    var directPtrs = getPtrs(this.props.n_direct, getDirectPtr, block_size);
+    var directPtrs = getPtrs(this.props.n_direct,
+                                      getDirectPtr, block_size);
     var singlePtr = getLvl2Ptrs(this.props.n_direct);
     var doublePtr = getLvl3Ptrs(this.props.n_direct + 1);
     var triplePtr = getLvl4Ptrs(this.props.n_direct + 2);
