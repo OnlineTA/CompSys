@@ -24,6 +24,7 @@ ol li {
         var offset = parseInt(window.location.hash.substr(1), 10);
         if (isNaN(offset)) {
           offset = 123;
+          location.hash = '#123';
         }
 
         return {
@@ -33,6 +34,12 @@ ol li {
           n_block_ptrs: 1024,
           block_size: 4096
         };
+      },
+
+      changeOffset: function (event) {
+        var textOffset = event.target.value;
+        location.hash = '#' + textOffset;
+        this.setState({offset: parseInt(textOffset, 10)});
       },
 
       render: function() {
@@ -59,6 +66,9 @@ ol li {
         return (
           <div>
             <h1>{Title}</h1>
+              Initial offset: <input type="text"
+                onChange={this.changeOffset}
+                defaultValue={this.state.offset} />
             <ol>
               <li><Inode {...this.state} size={allocA}
                     offset={offsetA} /></li>
