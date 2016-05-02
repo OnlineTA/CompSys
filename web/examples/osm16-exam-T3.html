@@ -78,6 +78,9 @@ ol li {
                 <div className="calc">
                   N = { exprC } = { allocC } (bytes)
                 </div>
+                <div className="text">
+                  That requires { emulateAlloc(allocC, this.state) } blocks.
+                </div>
                 <Inode {...this.state} size={allocC}
                     offset={offsetC} />
               </li>
