@@ -54,7 +54,7 @@ window.Inode = React.createClass({
       var blocknum = offset++;
       toalloc -= block_size;
       return (
-        <div className="direct">
+        <div className="direct" key={ index }>
           <div className="index">{ index }</div>
           <div className="blocknum">{ blocknum }</div>
         </div>
