@@ -63,7 +63,7 @@ window.Inode = React.createClass({
 
     function getZeroPtr(index) {
       return (
-        <div className="zero">
+        <div className="zero" key={ index }>
           <div className="index">{ index }</div>
           <div className="blocknum">0</div>
         </div>
@@ -111,14 +111,14 @@ window.Inode = React.createClass({
       return ptrs;
     }
 
-    function getIndirectPtr(i, cont) {
+    function getIndirectPtr(index, cont) {
       if (toalloc <= 0) {
-        return getZeroPtr(i);
+        return getZeroPtr(index);
       }
       var blocknum = offset++;
       return (
-        <div className="indirect">
-          <div className="index">{ i }</div>
+        <div className="indirect" key={ index }>
+          <div className="index">{ index }</div>
           <div className="blocknum">{ blocknum }</div>
           <div className="contents">
             {cont()}
