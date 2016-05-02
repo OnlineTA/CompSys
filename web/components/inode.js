@@ -1,46 +1,3 @@
-window.emulateAlloc = function emulateAlloc(size, props) {
-  var n_blocks = Math.ceil(size / props.block_size);
-
-  var n_lvl1_blocks = Math.min(props.n_direct, n_blocks);
-  var n_lvl2_blocks = 0;
-  var n_lvl3_blocks = 0;
-  var n_lvl4_blocks = 0;
-  var n_innr_blocks = 0;
-  n_blocks -= n_lvl1_blocks;
-
-  if (n_blocks > 0) {
-    n_lvl2_blocks = Math.min(props.n_block_ptrs, n_blocks);
-    n_innr_blocks += 1;
-    n_blocks -= n_lvl2_blocks;
-
-    if (n_blocks > 0) {
-      n_lvl3_blocks = Math.min(Math.pow(props.n_block_ptrs, 2), n_blocks);
-      n_innr_blocks += 1 + Math.ceil(n_lvl3_blocks / props.n_block_ptrs);
-      n_blocks -= n_lvl3_blocks;
-
-      if (n_blocks > 0) {
-        n_lvl4_blocks = Math.min(Math.pow(props.n_block_ptrs, 3), n_blocks);
-        var n_innr_innr_blocks =
-          Math.ceil(n_lvl4_blocks / Math.pow(props.n_block_ptrs, 2));
-        n_indirect_blocks += 1 +
-          Math.ceil(n_innr_innr_blocks / props.n_block_ptrs) +
-          n_innr_innr_blocks;
-        n_blocks -= n_lvl4_blocks;
-
-        if (n_blocks > 0) {
-          return Number.NaN;
-        }
-      }
-    }
-  }
-
-  return n_lvl1_blocks +
-         n_lvl2_blocks +
-         n_lvl3_blocks +
-         n_lvl4_blocks +
-         n_innr_blocks;
-}
-
 window.Inode = React.createClass({
   render: function() {
 
@@ -163,3 +120,49 @@ window.Inode = React.createClass({
     );
   }
 });
+
+// A function for emulating an inode allocation if inodes are to be drawn with
+// successive offsets.
+window.emulateAlloc = function emulateAlloc(size, props) {
+  var n_blocks = Math.ceil(size / props.block_size);
+
+  var n_lvl1_blocks = Math.min(props.n_direct, n_blocks);
+  var n_lvl2_blocks = 0;
+  var n_lvl3_blocks = 0;
+  var n_lvl4_blocks = 0;
+  var n_innr_blocks = 0;
+  n_blocks -= n_lvl1_blocks;
+
+  if (n_blocks > 0) {
+    n_lvl2_blocks = Math.min(props.n_block_ptrs, n_blocks);
+    n_innr_blocks += 1;
+    n_blocks -= n_lvl2_blocks;
+
+    if (n_blocks > 0) {
+      n_lvl3_blocks = Math.min(Math.pow(props.n_block_ptrs, 2), n_blocks);
+      n_innr_blocks += 1 + Math.ceil(n_lvl3_blocks / props.n_block_ptrs);
+      n_blocks -= n_lvl3_blocks;
+
+      if (n_blocks > 0) {
+        n_lvl4_blocks = Math.min(Math.pow(props.n_block_ptrs, 3), n_blocks);
+        var n_innr_innr_blocks =
+          Math.ceil(n_lvl4_blocks / Math.pow(props.n_block_ptrs, 2));
+        n_indirect_blocks += 1 +
+          Math.ceil(n_innr_innr_blocks / props.n_block_ptrs) +
+          n_innr_innr_blocks;
+        n_blocks -= n_lvl4_blocks;
+
+        if (n_blocks > 0) {
+          return Number.NaN;
+        }
+      }
+    }
+  }
+
+  return n_lvl1_blocks +
+         n_lvl2_blocks +
+         n_lvl3_blocks +
+         n_lvl4_blocks +
+         n_innr_blocks;
+}
+
