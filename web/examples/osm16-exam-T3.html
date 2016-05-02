@@ -55,12 +55,10 @@ ol li {
           4096].join(" ");
         var bytesD = eval(exprD);
         var gbD = bytesD / Math.pow(1024, 3);
-        var allocD = bytesD + 1;
 
         var offsetA = this.state.offset;
         var offsetB = offsetA + emulateAlloc(allocA, this.state);
         var offsetC = offsetB + emulateAlloc(allocB, this.state);
-        var offsetD = offsetC + emulateAlloc(allocC, this.state);
 
         document.title = Title;
         return (
@@ -96,11 +94,6 @@ ol li {
                 <div className="calc">
                   { exprD } = { bytesD } (bytes) ≈ { gbD.toFixed(2) } (GB)
                 </div>
-                <div className="text">
-                  To illustrate this, here is an allocation of { allocD } bytes:
-                </div>
-                <Inode {...this.state} size={allocD}
-                    offset={offsetD} />
               </li>
             </ol>
           </div>
