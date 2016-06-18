@@ -43,8 +43,8 @@
     Use the interface below to construct your solution.
   </p>
   <p>
-    Use the controls below to export your algorithm to XML. Copy and paste this
-    XML into your submission. Use this feature to save your work.
+    Use the controls below to export your pseudocode to XML. Copy and paste
+    this XML into your submission. Use this feature to save your work.
   </p>
   <div id="blocklyDiv" style="height: 480px;"></div>
 
@@ -60,15 +60,20 @@
   </section>
 
   <xml id="toolbox" style="display: none">
-    <category name="Variables">
+    <category name="Declarations">
       <block type="osm16_int_var"></block>
       <block type="osm16_sem_t_var"></block>
       <block type="osm16_sem_t_arr"></block>
     </category>
-    <category name="Values">
+    <category name="Variables">
+      <block type="osm16_varget"></block>
+      <block type="osm16_arrget"></block>
+      <block type="osm16_varset"></block>
+      <block type="osm16_arrset"></block>
+    </category>
+    <category name="Arithmetic">
       <block type="math_number"></block>
-      <block type="osm16_varvalue"></block>
-      <block type="osm16_arrelem"></block>
+      <block type="osm16_arithmetic"></block>
     </category>
     <category name="Semaphores">
       <block type="osm16_sem_init"></block>
