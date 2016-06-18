@@ -67,22 +67,40 @@
     </category>
     <category name="Values">
       <block type="math_number"></block>
+      <block type="osm16_varvalue"></block>
+      <block type="osm16_arrelem"></block>
     </category>
     <category name="Semaphores">
+      <block type="osm16_sem_init"></block>
       <block type="osm16_sem_P"></block>
       <block type="osm16_sem_V"></block>
     </category>
     <category name="Loops">
       <block type="osm16_for"></block>
+      <block type="osm16_infloop"></block>
     </category>
   </xml>
 
   <xml id="init_workspace" style="display:none">
     <block type="osm16_1st_reexam_sem_decl">
+      <statement name="DECL">
+        <block type="osm16_int_var">
+          <field name="VARNAME">N</field>
+          <value name="INIT_VALUE">
+            <block type="math_number">
+              <field name="NUM">2</field>
+            </block>
+          </value>
+        </block>
+      </statement>
       <next>
         <block type="osm16_1st_reexam_sem_init">
           <next>
             <block type="osm16_1st_reexam_sem_intersection">
+              <statement name="INTERSECTION">
+                <block type="osm16_infloop">
+                </block>
+              </statement>
               <next>
                 <block type="osm16_1st_reexam_sem_vehicle">
                 </block>
