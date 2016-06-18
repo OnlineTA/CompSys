@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Blockly Demo: Fixed Blockly</title>
+  <script src="../blockly/blockly_uncompressed.js"></script>
+  <script src="../blockly/blocks_compressed.js"></script>
+  <script src="../blockly/msg/js/en.js"></script>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: sans-serif;
+    }
+    h1 {
+      text-align:center;
+      font-weight: normal;
+      font-size: 140%;
+      text-decoration:underline;
+    }
+    section {
+      width:40em;
+      margin:0 auto;
+    }
+    .export .controls {
+      margin: 0.5em 0;
+    }
+    .editor textarea {
+      width: 100%;
+      -webkit-box-sizing: border-box;
+         -moz-box-sizing: border-box;
+              box-sizing: border-box;
+    }
+    .export .right {
+      display: inline-block;
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  <section>
+  <h1>OSM16 1st Reexam Semaphores Task</h1>
+  <p>
+    Use the interface below to construct your solution.
+  </p>
+  <p>
+    Use the controls below to export your algorithm to XML. Copy and paste this
+    XML into your submission. Use this feature to save your work.
+  </p>
+  <div id="blocklyDiv" style="height: 480px;"></div>
+
+  <div class="export">
+    <div class="controls">
+      <button class="left" onclick="javascript:export_xml()">Export ↓</button>
+      <button class="right" onclick="javascript:import_xml()">Import ↑</button>
+    </div>
+    <div class="editor">
+      <textarea id="xml_export" rows="5"></textarea>
+    </div>
+  </div>
+  </section>
+
+  <xml id="toolbox" style="display: none">
+    <category name="Variables">
+      <block type="osm16_int_var"></block>
+      <block type="osm16_sem_t_var"></block>
+      <block type="osm16_sem_t_arr"></block>
+    </category>
+    <category name="Values">
+      <block type="math_number"></block>
+    </category>
+    <category name="Semaphores">
+      <block type="osm16_sem_P"></block>
+      <block type="osm16_sem_V"></block>
+    </category>
+    <category name="Loops">
+      <block type="osm16_for"></block>
+    </category>
+  </xml>
+
+  <xml id="init_workspace" style="display:none">
+    <block type="osm16_1st_reexam_sem_decl">
+      <next>
+        <block type="osm16_1st_reexam_sem_init">
+          <next>
+            <block type="osm16_1st_reexam_sem_intersection">
+              <next>
+                <block type="osm16_1st_reexam_sem_vehicle">
+                </block>
+              </next>
+            </block>
+          </next>
+        </block>",
+      </next>
+    </block>
+  </xml>
+
+  <script>
+    var workspace = Blockly.inject('blocklyDiv',
+        {media: '../blockly/../media/',
+         toolbox: document.getElementById('toolbox')});
+
+    Blockly.Xml.domToWorkspace(
+      document.getElementById("init_workspace"), workspace);
+
+    var xml_area = document.getElementById("xml_export");
+
+    function export_xml() {
+      xml_area.value =
+        Blockly.Xml.domToText(
+          Blockly.Xml.workspaceToDom(workspace));
+      xml_area.select();
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        // Do nothing..
+      }
+    }
+
+    function import_xml() {
+      try {
+        Blockly.Xml.domToWorkspace(
+          Blockly.Xml.textToDom(xml_area.value),
+          workspace);
+      } catch (err) {
+        alert("Couldn't import your XML.\n" + err.message +
+          "\nSee the global error variable for details.");
+        error = err;
+      }
+    }
+  </script>
+
+</body>
+</html>
