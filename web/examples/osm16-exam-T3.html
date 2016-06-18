@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../components/inode.css"/>
+    <style>
+ol li {
+  margin-top:2em;
+}
+    </style>
+  </head>
+  <body>
+  <div id="container"></div>
+  <script src="https://fb.me/react-15.0.2.js"></script>
+  <script src="https://fb.me/react-dom-15.0.2.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+  <script type="text/babel" src="../components/inode.js"></script>
+  <script type="text/babel">
+    var Title = "OSM 2016 - Exam - T3 - Solution";
+
+    var App = React.createClass({
+
+      getInitialState: function() {
+        var offset = parseInt(window.location.hash.substr(1), 10);
+        if (isNaN(offset)) {
+          offset = 123;
+          location.hash = '#123';
+        }
+
+        return {
+          offset: offset,
+          alloc_inode_block: false,
+          n_direct: 12,
+          n_block_ptrs: 1024,
+          block_size: 4096
+        };
+      },
+
+      changeOffset: function (event) {
+        var textOffset = event.target.value;
+        location.hash = '#' + textOffset;
+        this.setState({offset: parseInt(textOffset, 10)});
+      },
+
+      render: function() {
+        var allocA = 5000;
+        var allocB = 49156;
+        var exprC = [
+          "(", this.state.n_direct, "+", this.state.n_block_ptrs, ")", "*",
+          this.state.block_size, "+", 4].join(" ");
+        var allocC = eval(exprC);
+
+        var exprD = [
+          "(", 12, "+", 1024, "+", 1024, "*", 1024, ")", "*",
+          4096].join(" ");
+        var bytesD = eval(exprD);
+        var gbD = bytesD / Math.pow(1024, 3);
+
+        var offsetA = this.state.offset;
+        var offsetB = offsetA + emulateAlloc(allocA, this.state);
+        var offsetC = offsetB + emulateAlloc(allocB, this.state);
+
+        document.title = Title;
+        return (
+          <div>
+            <h1>{Title}</h1>
+              Initial offset: <input type="text"
+                onChange={this.changeOffset}
+                defaultValue={this.state.offset} />
+            <ol type="a">
+              <li><Inode {...this.state} size={allocA}
+                    offset={offsetA} /></li>
+              <li><Inode {...this.state} size={allocB}
+                    offset={offsetB} /></li>
+              <li>
+                <ol type="i">
+                  <li>
+                    <div className="calc">
+                      N = { exprC } = { allocC } (bytes)
+                    </div>
+                  </li>
+                  <li>
+                    <div className="calc">
+                      { emulateAlloc(allocC, this.state) } (blocks)
+                    </div>  
+                  </li>
+                  <li>
+                    <Inode {...this.state} size={allocC}
+                      offset={offsetC} />
+                  </li>
+                </ol>
+              </li>
+              <li>
+                <div className="calc">
+                  { exprD } = { bytesD } (bytes) ≈ { gbD.toFixed(2) } (GB)
+                </div>
+              </li>
+            </ol>
+          </div>
+        );
+      }
+    });
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById("container")
+    );
+  </script>
+  </body>
+</html>

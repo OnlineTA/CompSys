@@ -1,0 +1,22 @@
+.contents {
+  margin-left:2em;
+}
+.direct {
+  border-bottom:0.1em solid #A9E2F3;
+/*  padding:0.1em;*/
+/*  width:10em;*/
+}
+.zero, .ellipsis {
+  border-bottom:0.1em solid #A9E2F3;
+}
+.indirect {
+  border-bottom:0.1em solid #A9E2F3;
+/*  padding:0.1em;*/
+/*  width:20em;*/
+}
+.index, .blocknum {
+  display:inline;
+}
+.blocknum {
+  float:right;
+}
