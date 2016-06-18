@@ -134,7 +134,7 @@
 
     function export_xml() {
       xml_area.value =
-        Blockly.Xml.domToText(
+        Blockly.Xml.domToPrettyText(
           Blockly.Xml.workspaceToDom(workspace));
       xml_area.select();
       try {
