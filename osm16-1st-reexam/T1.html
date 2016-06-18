@@ -145,6 +145,7 @@
     }
 
     function import_xml() {
+      workspace.clear();
       try {
         Blockly.Xml.domToWorkspace(
           Blockly.Xml.textToDom(xml_area.value),
