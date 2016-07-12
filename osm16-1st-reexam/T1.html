@@ -51,13 +51,15 @@
   <div class="export">
     <div class="controls">
       <button class="left" onclick="javascript:export_xml()">Export ↓</button>
-      <button class="center" onclick="javascript:renderSimple(workspace)">Export to SVG</button>
+      <button class="center" onclick="javascript:renderSimple()">Export to SVG</button>
       <button class="right" onclick="javascript:import_xml()">Import ↑</button>
     </div>
     <div class="editor">
       <textarea id="xml_export" rows="5"></textarea>
     </div>
   </div>
+
+  <div id="svgDiv"></div>
   </section>
 
   <xml id="toolbox" style="display: none">
@@ -159,7 +161,7 @@
     }
 
     // Source: https://gist.github.com/acbart/dcda677555e97b59c1c91554270dc80b
-    function renderSimple(workspace) {
+    function renderSimple() {
       aleph = workspace.svgBlockCanvas_.cloneNode(true);
       aleph.removeAttribute("width");
       aleph.removeAttribute("height");
@@ -177,7 +179,12 @@
           var img  = document.createElement("img");
           console.log(xml);
           img.setAttribute('src', data);
-          document.body.appendChild(img);
+
+          var svgDiv = document.getElementById("svgDiv");
+          while (svgDiv.firstChild) {
+            svgDiv.removeChild(svgDiv.firstChild);
+          }
+          svgDiv.appendChild(img);
       }
     }
   </script>
